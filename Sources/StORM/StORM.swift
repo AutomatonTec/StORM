@@ -55,7 +55,7 @@ open class StORM {
 		var count = 0
 		let mirror = Mirror(reflecting: self)
 		for case let (label?, value) in mirror.children {
-			if count >= offset && !label.hasPrefix("internal_") && !label.hasPrefix("_") {
+            if count >= offset && !(label.hasPrefix("internal_") || label.hasPrefix("_") || label.hasPrefix("$__lazy_storage")) {
 				if value is [String:Any] {
 					c.append((label, modifyValue(try! (value as! [String:Any]).jsonEncodedString(), forKey: label)))
 				} else if value is [String] {
